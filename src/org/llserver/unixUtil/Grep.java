@@ -27,7 +27,7 @@ public class Grep extends Unix {
 	private Pattern createPattern(String pattern)
 	{
 		if (ignoreCase_)
-			return Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
+			return Pattern.compile(Pattern.quote(pattern), Pattern.CASE_INSENSITIVE);
 		else
 			return Pattern.compile(pattern);
 	}
