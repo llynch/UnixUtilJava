@@ -10,14 +10,14 @@ import java.util.Scanner;
 
 public class Unix {
 	
-	private List<String> lines = createList();
+	private List<String> lines = newList();
 	
 	public Unix()
 	{
 		
 	}
 	
-	private List<String> createList() {
+	protected List<String> newList() {
 		return new LinkedList<String>();
 	}
 
@@ -34,15 +34,14 @@ public class Unix {
 		return this;
 	}
 	
-	public Unix grep(String match)
+	public Grep grep()
 	{
-		List<String> newLines = createList();
-		for (String line : lines)
-			if (line.indexOf(match) > 0)
-				newLines.add(line);
-		
-		this.lines = newLines;
-		return this;
+		return new Grep(this);
+	}
+	
+	public Unix grep(String pattern)
+	{
+		return new Grep(this).match(pattern);
 	}
 	
 	public Unix head()
@@ -90,6 +89,22 @@ public class Unix {
 	public List<String> getLines()
 	{
 		return this.lines;
+	}
+	
+	protected void setLines(List<String> lines)
+	{
+		this.lines = lines;
+	}
+	
+	public String toString()
+	{
+		StringBuilder sb = new StringBuilder();
+		for (String line : lines)
+		{
+			sb.append(line);
+			sb.append("\n");
+		}
+		return sb.toString();
 	}
 	
 	
