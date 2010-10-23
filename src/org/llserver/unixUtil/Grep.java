@@ -18,8 +18,18 @@ public class Grep extends Unix {
 		List<String> newLines = newList();
 		Pattern compiledPattern = createPattern(pattern);
 		for (String line : getLines())
-			if (compiledPattern.matcher(line).find() || invertMatch_)
-				newLines.add(line);
+		{
+			if (invertMatch_)
+			{
+				if (!compiledPattern.matcher(line).find())
+					newLines.add(line);
+			}
+			else
+			{
+				if (compiledPattern.matcher(line).find())
+					newLines.add(line);
+			}
+		}
 		this.setLines(newLines);
 		return this;
 	}
@@ -27,7 +37,7 @@ public class Grep extends Unix {
 	private Pattern createPattern(String pattern)
 	{
 		if (ignoreCase_)
-			return Pattern.compile(Pattern.quote(pattern), Pattern.CASE_INSENSITIVE);
+			return Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
 		else
 			return Pattern.compile(pattern);
 	}
